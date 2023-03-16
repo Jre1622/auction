@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="auction" style="padding: 0 41rem; margin-top: 4rem;">
+        <div class="product">This is the product</div>
+        <div style="display: flex;justify-content: space-evenly;">
+            <div id="bid-price">$0</div>
+            <div id="time-remaining">24d 12h 43m</div>
+        </div>
+        <button id="bid-button">Bid!</button>
+    </div>
+
+    <script>
+        let bidPrice = 0;
+        let timeRemaining = 24 * 24 * 60 * 60; // set time remaining in seconds
+
+        function updateBidPrice() {
+            const bidPriceElement = document.getElementById('bid-price');
+            bidPrice += 100;
+            bidPriceElement.innerText = `$${bidPrice}`;
+        }
+
+        function updateTimer() {
+            const timeRemainingElement = document.getElementById('time-remaining');
+            const daysRemaining = Math.floor(timeRemaining / (24 * 60 * 60));
+            const hoursRemaining = Math.floor((timeRemaining % (24 * 60 * 60)) / (60 * 60));
+            const minutesRemaining = Math.floor((timeRemaining % (60 * 60)) / 60);
+            const secondsRemaining = timeRemaining % 60;
+            timeRemainingElement.innerText = `${daysRemaining}d ${hoursRemaining}h ${minutesRemaining}m ${secondsRemaining}s`;
+            timeRemaining++;
+        }
+
+        const bidButton = document.getElementById('bid-button');
+        bidButton.addEventListener('click', () => {
+            updateBidPrice();
+            updateTimer();
+        });
+
+        setInterval(() => {
+            timeRemaining--;
+            updateTimer();
+        }, 1000);
+    </script>
+</body>
+</html>
